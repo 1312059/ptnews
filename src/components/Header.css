@@ -1,0 +1,18 @@
+.Header .nav {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+
+.Header .nav img {
+    width: auto;
+    height: 150px;
+}
+
+.Header .custom-dropdown-menu {
+    display: flex;
+}
+
+.Header .nav a:hover {
+    color: var(--bg-dark);
+}
