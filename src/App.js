@@ -2,14 +2,14 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Page404 from "./pages/Page404";
 import Home from "./pages/Home";
-import ForYou from "./pages/For You";
-import Local from "./pages/Politics"
+import Favorites from "./pages/Favorites";
 import NewsCategory from "./pages/NewsCategory";
 import NewsDetails from "./pages/NewsDetails";
-import World from "./pages/Environment";
 import React from "react";
 
-
+import { useReducer } from "react";
+import { FavoritesContext } from "./store/favorites/context";
+import { initialState, favoritesReducer } from "./store/favorites/reducer";
 
 const router = createBrowserRouter([
   {
@@ -17,9 +17,9 @@ const router = createBrowserRouter([
     element: <Home />,
     errorElement: <Page404 />,
   },
-  {
-    path: "/foryou",
-    element: <ForYou />
+   {
+    path: "/Favorites",
+    element: <Favorites />,
   },
   {
     path: "/category/:categoryId",
@@ -31,9 +31,19 @@ const router = createBrowserRouter([
   },
 ])
 function App() {
+
+
+  const [favoritesState, favoritesDispatch] = useReducer(favoritesReducer, initialState) ;
+
+  const favoritesContextValue = {
+    favoritesState, favoritesDispatch,
+  };
+
   return (
     <div className="App">
-     <RouterProvider router={router} />
+      <FavoritesContext.Provider value={favoritesContextValue}>
+        <RouterProvider router={router} />
+      </FavoritesContext.Provider>
     </div>
   );
 }

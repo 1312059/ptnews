@@ -1,20 +1,42 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
-import { Card } from "react-bootstrap";
+import Card  from "react-bootstrap/Card";
+import Button from "react-bootstrap/Button";
+import { removeFromFavorites } from "../store/favorites/actions";
+import { FavoritesContext } from "../store/favorites/context";
 
 
 function NewsCard(props) {
-    const {newsId, imgSrc, title, description } = props;
+
+    const { favoritesDispatch } = useContext(FavoritesContext);
+
+    const { newsId, imgSrc, title, description, hasCloseButton } = props;
+
+    function handleRemoveFromFavorites(id) {
+        const actionResult = removeFromFavorites(id)
+        favoritesDispatch(actionResult)
+    }
 
     return (
-        <Link to={`/news/${encodeURIComponent(newsId)}`}>
-        <Card className="h-100">
+        <Card className="NewsCard h-100">
+             <Link to={`/news/${encodeURIComponent(newsId)}`}>
             <Card.Img variant="top" src={imgSrc} />
             <Card.Body>
             <Card.Title>{title}</Card.Title>
             <Card.Text>{description}</Card.Text>
             </Card.Body>
+            </Link>
+
+            {hasCloseButton && (
+              <Button variant="light"
+              onClick={() => {
+                handleRemoveFromFavorites(newsId)
+              }}
+              >
+
+             </Button>
+            )}
         </Card>
-        </Link>
     );
 }
 

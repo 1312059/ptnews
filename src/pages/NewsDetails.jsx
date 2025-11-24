@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import { useParams } from "react-router-dom";
 import Layout from "../components/Layout";
 import { Container } from "react-bootstrap";
@@ -8,16 +9,25 @@ import { getNewsDetailsEndpoint } from "../api/endpoint";
 import { getNewsDetails } from "../api/adaptors";
 import Button from "react-bootstrap/Button";
 import "./NewsDetails.css"
+import { addToFavorites } from "../store/favorites/actions";
+import { FavoritesContext } from "../store/favorites/context";
 
 
 function NewsDetails() {
+    const { favoritesDispatch } = useContext(FavoritesContext);
     let { newsId } = useParams()
     newsId = decodeURIComponent(newsId);
     const newsDetailsEndpoint = getNewsDetailsEndpoint(newsId);
     const newsDetails = useFetch(newsDetailsEndpoint)
     const adaptedNewsDetails = getNewsDetails(newsDetails)
 
-    const { title, description, image, date, author, content } = adaptedNewsDetails;
+    const { title, description, image, date, author, content, thumbnail } = adaptedNewsDetails;
+
+    function handleAddToFavorites(product) {
+        const actionResult = addToFavorites(product);
+        favoritesDispatch(actionResult);
+    }
+
 
     return (
         <Layout>
@@ -34,7 +44,17 @@ function NewsDetails() {
                         <p>{author}</p>
                         
                     </div>
-                    <Button>Subscribe for more</Button>
+                    <Button
+                    onClick={() => {
+                     handleAddToFavorites({
+                        id: newsId,
+                        thumbnail,
+                        title,
+                        description,
+                        hasCloseButton: true,
+                     });
+                    }}
+                    >Add to favorites</Button>
                 </div>
                 <div dangerouslySetInnerHTML={{ __html: content}}></div>
                 </Col>

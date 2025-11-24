@@ -26,7 +26,9 @@ function NewsCategory() {
             break;
             default:
                 break;
-                
+
+        case "foryou":
+                    break;
      }
         
      return (
@@ -36,7 +38,7 @@ function NewsCategory() {
                 <NewsCardList newsList={adaptedNewsList} />
             </Container>
         </Layout>
-     )
+     );
 }
 
 export default NewsCategory;

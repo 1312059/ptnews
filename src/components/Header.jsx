@@ -44,6 +44,11 @@ function Header() {
                     For You
                 </Link>
             </li>
+            <li className={isDisplayed ? "container" : null}>
+                <Link to="/category/favorites" className="p-3 text-uppercase text-light">
+                    Favorites
+                </Link>
+            </li>
           </ul>
           </Container>
           </nav>

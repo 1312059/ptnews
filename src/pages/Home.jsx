@@ -52,8 +52,27 @@ function Home() {
                     <NewsCardList newsList={adaptedCultureData}  />
                 </Container>
             </section>
+
+           <section className="Favorites">
+                <Container>
+                    <h1 className="mb-5 pt-3">Favorites</h1>
+                   <p>
+           Want to save an article that peaked your interest?
+          </p>
+          <p>
+            Next to each article you will find a button with which you can save your favorite texts for later.
+          </p>
+          <p className="pb-3">
+            Visit{" "}
+            <Link to="/favorites" className="text-secondary">
+              Favorites
+            </Link>{" "}
+            to see your saved articles
+          </p>
+                </Container>
+            </section>
         </Layout>
-    )
+    );
 }
 
 
